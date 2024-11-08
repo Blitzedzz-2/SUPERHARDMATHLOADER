@@ -1,1 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load URL in iframe</title>
+    <style>
+        /* Fullscreen background */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden;  /* Prevent scrollbars */
+        }
+
+        /* Centered text */
+        .message {
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="message" onclick="loadIframe()">CLICK TO LOAD</div>
+
+    <script>
+        // Function to load the iframe with the URL from the query string
+        function loadIframe() {
+            // Get the URL from the query string
+            const urlParams = new URLSearchParams(window.location.search);
+            const iframeUrl = urlParams.get('url');
+
+            if (iframeUrl) {
+                // Create the iframe element
+                const iframe = document.createElement('iframe');
+                iframe.src = iframeUrl;
+                iframe.style.width = '100%';
+                iframe.style.height = '100vh';
+                iframe.style.border = 'none';
+
+                // Replace the body content with the iframe
+                document.body.innerHTML = '';  // Clear the current body content
+                document.body.appendChild(iframe);  // Add the iframe to the body
+            } else {
+                alert('No URL provided in query string');
+            }
+        }
+    </script>
+
+</body>
+</html>
 
