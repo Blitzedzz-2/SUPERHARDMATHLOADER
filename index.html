@@ -161,7 +161,7 @@
                     <iframe src="${iframeUrl}" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none;"></iframe>
                 `;
             } else {
-                alert('No URL provided in query string');
+                document.getElementById('loading-dots').innerHTML = 'Error: Failed to compile';
             }
         }
     </script>
