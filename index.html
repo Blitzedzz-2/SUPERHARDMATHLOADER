@@ -49,6 +49,7 @@
         .loading-message {
             font-size: 18px;
             margin-bottom: 10px;
+            display: none; /* Hidden initially */
         }
 
         .progress-bar {
@@ -59,19 +60,13 @@
             border-radius: 10px;
             overflow: hidden;
             position: relative;
+            display: none; /* Hidden initially */
         }
 
         .progress-fill {
             width: 0;
             height: 100%;
             background: linear-gradient(90deg, #0f0, #4caf50);
-            animation: fillProgress 5s linear forwards;
-        }
-
-        @keyframes fillProgress {
-            to {
-                width: 100%;
-            }
         }
 
         .loading-dots {
@@ -98,17 +93,17 @@
 
     <div id="loader" class="loader-container">
         <div class="title">Super Hard Math Game Loader</div>
-        <div class="loading-message">Loading: Initializing Game Engine</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+        <div class="loading-message" id="message1">Loading Initializing Game Engine</div>
+        <div class="progress-bar" id="bar1">
+            <div class="progress-fill" style="animation: fillProgress 2s linear forwards;"></div>
         </div>
-        <div class="loading-message">Loading: Assets</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+        <div class="loading-message" id="message2">Loading Assets</div>
+        <div class="progress-bar" id="bar2">
+            <div class="progress-fill" style="animation: fillProgress 2s linear forwards;"></div>
         </div>
-        <div class="loading-message">Loading: Math Challenges</div>
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
+        <div class="loading-message" id="message3">Compiling game & Loading Game</div>
+        <div class="progress-bar" id="bar3">
+            <div class="progress-fill" style="animation: fillProgress 2s linear forwards;"></div>
         </div>
         <div class="loading-dots">Loading...</div>
     </div>
@@ -122,8 +117,27 @@
             const loader = document.getElementById('loader');
             loader.style.display = 'flex';
 
-            // Simulate loading and then load iframe
-            setTimeout(loadIframe, 6000); // Wait 6 seconds for loading animation
+            // Start sequential loading
+            showProgress('message1', 'bar1', () => {
+                showProgress('message2', 'bar2', () => {
+                    showProgress('message3', 'bar3', loadIframe);
+                });
+            });
+        }
+
+        function showProgress(messageId, barId, callback) {
+            // Show the current message and progress bar
+            document.getElementById(messageId).style.display = 'block';
+            const progressBar = document.getElementById(barId);
+            progressBar.style.display = 'block';
+
+            // Wait for the progress bar animation to complete
+            setTimeout(() => {
+                // Hide the progress bar after it's done
+                document.getElementById(messageId).style.display = 'none';
+                progressBar.style.display = 'none';
+                if (callback) callback(); // Proceed to the next step
+            }, 2000); // Match the animation duration (2s)
         }
 
         function loadIframe() {
