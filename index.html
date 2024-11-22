@@ -19,8 +19,23 @@
             color: white;
         }
 
-        .loader-container {
+        .click-message, .loader-container {
+            position: absolute;
             text-align: center;
+        }
+
+        .click-message {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffcc00;
+            cursor: pointer;
+            text-shadow: 2px 2px #000;
+        }
+
+        .loader-container {
+            display: none; /* Hidden initially */
+            flex-direction: column;
+            align-items: center;
         }
 
         .title {
@@ -59,7 +74,6 @@
             }
         }
 
-        /* Blinking dots for loading */
         .loading-dots {
             margin-top: 15px;
             font-size: 20px;
@@ -80,6 +94,8 @@
     </style>
 </head>
 <body>
+    <div class="click-message" onclick="showLoader()">CLICK TO LOAD</div>
+
     <div id="loader" class="loader-container">
         <div class="title">Super Hard Math Game Loader</div>
         <div class="loading-message">Loading: Initializing Game Engine</div>
@@ -98,29 +114,38 @@
     </div>
 
     <script>
+        function showLoader() {
+            // Hide the "CLICK TO LOAD" message
+            document.querySelector('.click-message').style.display = 'none';
+
+            // Show the loader
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+
+            // Simulate loading and then load iframe
+            setTimeout(loadIframe, 6000); // Wait 6 seconds for loading animation
+        }
+
         function loadIframe() {
+            // Get the URL from the query string
             const urlParams = new URLSearchParams(window.location.search);
             const iframeUrl = urlParams.get('url');
 
             if (iframeUrl) {
-                // Simulate loading time
-                setTimeout(() => {
-                    // Clear the loading screen and create the iframe
-                    document.body.innerHTML = ''; 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = iframeUrl;
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.border = 'none';
-                    document.body.appendChild(iframe);
-                }, 6000); // 6 seconds total for animations to complete
+                // Create the iframe element
+                const iframe = document.createElement('iframe');
+                iframe.src = iframeUrl;
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+
+                // Clear the content and append the iframe
+                document.body.innerHTML = ''; 
+                document.body.appendChild(iframe);
             } else {
                 alert('No URL provided in query string');
             }
         }
-
-        // Attach click event to loader container
-        document.getElementById('loader').addEventListener('click', loadIframe);
     </script>
 </body>
 </html>
