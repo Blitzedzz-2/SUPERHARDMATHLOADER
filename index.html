@@ -5,62 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SuperHardMathLoader</title>
     <style>
-        /* Fullscreen background */
+        /* Fullscreen styling */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;  /* Prevent scrollbars */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1d3557, #457b9d);
+            color: white;
         }
 
-        /* Centered text (for click-to-load) */
-        .message {
-            font-size: 30px;
+        .loader-container {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 36px;
             font-weight: bold;
-            color: #333;
-            cursor: pointer;
-            z-index: 1; /* Make sure the text is above the iframe */
+            margin-bottom: 20px;
+            color: #ffcc00;
+            text-shadow: 2px 2px #000;
         }
 
-        /* Ensure iframe takes up the full viewport */
-        iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+        .loading-message {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            width: 80%;
+            height: 20px;
+            background: #333;
+            margin: 10px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 0;
             height: 100%;
-            border: none;
+            background: linear-gradient(90deg, #0f0, #4caf50);
+            animation: fillProgress 5s linear forwards;
+        }
+
+        @keyframes fillProgress {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Blinking dots for loading */
+        .loading-dots {
+            margin-top: 15px;
+            font-size: 20px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                content: '.';
+            }
+            33% {
+                content: '..';
+            }
+            66% {
+                content: '...';
+            }
         }
     </style>
 </head>
 <body>
-
-    <div onclick="loadIframe()">CLICK TO LOAD</div>
+    <div id="loader" class="loader-container">
+        <div class="title">Super Hard Math Game Loader</div>
+        <div class="loading-message">Loading: Initializing Game Engine</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="loading-message">Loading: Assets</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="loading-message">Loading: Math Challenges</div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="loading-dots">Loading...</div>
+    </div>
 
     <script>
-        // Function to load the iframe with the URL from the query string
         function loadIframe() {
-            // Get the URL from the query string
             const urlParams = new URLSearchParams(window.location.search);
             const iframeUrl = urlParams.get('url');
 
             if (iframeUrl) {
-                // Create the iframe element
-                const iframe = document.createElement('iframe');
-                iframe.src = iframeUrl;
-
-                // Remove the message and append the iframe to the body
-                document.body.innerHTML = '';  // Clear the current body content
-                document.body.appendChild(iframe);  // Add the iframe to the body
+                // Simulate loading time
+                setTimeout(() => {
+                    // Clear the loading screen and create the iframe
+                    document.body.innerHTML = ''; 
+                    const iframe = document.createElement('iframe');
+                    iframe.src = iframeUrl;
+                    iframe.style.width = '100%';
+                    iframe.style.height = '100%';
+                    iframe.style.border = 'none';
+                    document.body.appendChild(iframe);
+                }, 6000); // 6 seconds total for animations to complete
             } else {
                 alert('No URL provided in query string');
             }
         }
-    </script>
 
+        // Attach click event to loader container
+        document.getElementById('loader').addEventListener('click', loadIframe);
+    </script>
 </body>
 </html>
