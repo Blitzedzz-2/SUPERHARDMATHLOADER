@@ -1,1 +1,97 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Swiper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .swiper-container {
+            width: 80%;
+            max-width: 600px;
+            overflow: hidden;
+            position: relative;
+        }
+        .swiper-wrapper {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .swiper-slide {
+            min-width: 100%;
+            transition: transform 0.5s ease;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .swiper-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            font-size: 24px;
+            border: none;
+            cursor: pointer;
+        }
+        .swiper-button-left {
+            left: 10px;
+        }
+        .swiper-button-right {
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/86a34751def11cf1430bf361cca32d54.png" alt="Image 1"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/ce72f0695399bc040536fc305dfa27c7.png" alt="Image 2"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/8586d0e13514d2beada95235a90febdf.png" alt="Image 3"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/b30de3df2dfd338f91807e4eb5486ad2.png" alt="Image 4"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/8125fae32e77cb1ce5d64198a95c6d8c.png" alt="Image 5"></div>
+        <div class="swiper-slide"><img src="https://raw.githubusercontent.com/Blitzedzz-2/SUPERHARDMATHLOADER/refs/heads/main/ASSETS/memes/fa1e73dc6189160657fdf9e6fc00cfbd.png" alt="Image 6"></div>
+    </div>
+    <button class="swiper-button swiper-button-left" onclick="prevSlide()">❮</button>
+    <button class="swiper-button swiper-button-right" onclick="nextSlide()">❯</button>
+</div>
+
+<script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.swiper-slide');
+    const totalSlides = slides.length;
+
+    function updateSlidePosition() {
+        const swiperWrapper = document.querySelector('.swiper-wrapper');
+        swiperWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlidePosition();
+    }
+
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlidePosition();
+    }
+</script>
+
+</body>
+</html>
